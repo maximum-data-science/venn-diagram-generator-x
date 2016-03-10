@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Create and Save your own Veen diagrams here.</title>
+</head>
+
+<style type="text/css">
+  #controls {
+    float:left;
+    width: 200px;
+    border: 1px solid black;
+    line-height: 1.5em;
+    padding: 20px;
+  }
+</style>
+
+<body>
+
+<div id="controls">
+  <h3>Venn Diagram Generator</h3>
+  <label>Diagram size (px x px):</label>
+  <input type="text" id="size_textbox" value="600"/>
+  <br>
+  <label>Number of cirlces
+  <select id="size_selector">
+    <option>2</option>
+    <option>3</option>
+    <option>4</option>
+  </select>
+  <br>
+  <button id="color_button">Recolor circles</button>
+  <button id="export_button">Export as PNG</button>
+  <hr>
+  <p>Click the text in the diagram to edit it</p>
+</div>
+
+<div id="output">
+
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" width="600" height="600" style="font-size: 15px"></svg>
+
+</div>
+
+<footer style="position:fixed; bottom: 5px">
+This generator is (C) 2016 Bradley Momberger and released under the MIT License.  Source code at <a href="https://github.com/airhadoken/venn-diagram-generator">https://github.com/airhadoken/venn-diagram-generator</a>
+</footer>
+
+<!-- script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.2.1/jquery.min.js"></script -->
+<script type="text/javascript" src="./jquery.min.js"></script>
+<script type="text/javascript" src="./venn.js"></script>
+</body>
+</html>
