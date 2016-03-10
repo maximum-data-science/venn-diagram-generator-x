@@ -75,10 +75,10 @@ function drawCenteredText(key, x, y) {
   svg.innerHTML += "<text y='"
                    + y
                    + "' text-anchor='middle'></text>";
+  svg.lastChild.id = key + ":" + x ;
   svg.lastChild.innerHTML = textareas[key] 
                             ? textareaToTspans(textareas[key], svg.lastChild) 
                             : "<tspan x='" + x + "'>[]</tspan>";
-  svg.lastChild.id = key + ":" + x ;
 }
 
 function textareaToTspans(textarea, textelement) {
