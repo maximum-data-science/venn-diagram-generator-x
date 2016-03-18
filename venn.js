@@ -183,10 +183,20 @@ $("#size_selector").on("change", function() {
 });
 
 $("#size_textbox").on("change", function() {
-  var val= $(this).val();
+  var val = $(this).val();
+  var fontsize;
   if(+val > 0) {
-    $("#output svg").attr("width", val).attr("height", val).css("font-size", function() {
-      return this.width.baseVal.value / 40;
+    $("#output svg")
+    .attr("width", val)
+    .attr("height", val)
+    .css("font-size", function() {
+      return (fontsize = this.width.baseVal.value / 40);
+    }).find("text").each(function(_, text) {
+      var $tspans = $(text).find("tspan");
+      var length = $tspans.length;
+      $tspans.attr("dy", function(i) {
+        return i === 0 ? fontsize / -2 * (length - 1) : fontsize;
+      });
     });
   }
 });
