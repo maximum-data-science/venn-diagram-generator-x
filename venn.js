@@ -1,5 +1,5 @@
 
-var textareas = {
+var circletexts = {
   "1" : null,
   "2" : null,
   "3" : null,
@@ -76,14 +76,13 @@ function drawCenteredText(key, x, y) {
                    + y
                    + "' text-anchor='middle'></text>";
   svg.lastChild.id = key + ":" + x ;
-  svg.lastChild.innerHTML = textareas[key] 
-                            ? textareaToTspans(textareas[key], svg.lastChild) 
+  svg.lastChild.innerHTML = circletexts[key] 
+                            ? textToTspans(circletexts[key], svg.lastChild) 
                             : "<tspan x='" + x + "'>[]</tspan>";
 }
 
-function textareaToTspans(textarea, textelement) {
-  var $textarea = $(textarea);
-  var textlines = $textarea.val().split("\n");
+function textToTspans(text, textelement) {
+  var textlines = text.split("\n");
   var fontsize = parseInt($(textelement).closest("svg").css("font-size"));
 
   if(textlines.length === 0 || textlines.length === 1 && textlines[0] === "") {
@@ -106,8 +105,7 @@ $("#output").on("click", "svg text", function(ev) {
   var textout = ev.currentTarget;
   var $div;
   var key = $(textout).attr("id").split(":")[0];
-  var $textarea = $(textareas[key] || "<textarea></textarea>");
-  textareas[key] = $textarea[0];
+  var $textarea = $("<textarea></textarea>");
 
   $("#output").append(
     $div = $("<div>").css({"position":"absolute", left: $(this).offset().left, top: $(this).offset().top })
@@ -118,8 +116,8 @@ $("#output").on("click", "svg text", function(ev) {
             ))
             .append("<br>")
             .append($("<button>Update</button>").on("click", function() {
-              $(textout).html(textareaToTspans($textarea, textout));
-              $textarea.detach(); // still referenced in textareas object
+              circletexts[key] = $textarea.val();
+              $(textout).html(textToTspans($textarea.val(), textout));
               $div.remove();
             }))
   );
