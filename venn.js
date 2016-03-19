@@ -54,7 +54,7 @@ function drawCircle(current, total) {
     fg.toString(10),
     ", " ,
     fb.toString(10),
-    ', 0.5)" style="stroke:#',
+    ', 0.3)" style="stroke:#',
     zp(Math.floor((fr/2)).toString(16)),
     zp(Math.floor((fg/2)).toString(16)),
     zp(Math.floor((fb/2)).toString(16)), 
@@ -211,7 +211,7 @@ $("#color_button").on("click", function() {
       + Math.floor(Math.random() * 255) 
       + ", " 
       + Math.floor(Math.random() * 255) 
-      + ", 0.5)";
+      + ", 0.3)";
   });
 });
 
