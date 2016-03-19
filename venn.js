@@ -15,6 +15,13 @@ var circletexts = {
   "1234" : null
 };
 
+function zp(str) {
+  if(str.length < 2) {
+    return "0" + str;
+  } else {
+    return str;
+  }
+} 
 
 function drawCircle(current, total) {
 
@@ -33,13 +40,6 @@ function drawCircle(current, total) {
   var fg = Math.floor(Math.random() * 255);
   var fb = Math.floor(Math.random() * 255);
 
-  function zp(str) {
-    if(str.length < 2) {
-      return "0" + str;
-    } else {
-      return str;
-    }
-  } 
 
   svg.innerHTML += [
     '\n<ellipse cx="',
@@ -204,14 +204,21 @@ $("#size_selector").trigger("change");
 
 
 $("#color_button").on("click", function() {
-  $("#output ellipse").attr("fill", function() {
-    return "rgba(" 
-      + Math.floor(Math.random() * 255) 
-      + ", " 
-      + Math.floor(Math.random() * 255) 
-      + ", " 
-      + Math.floor(Math.random() * 255) 
-      + ", 0.3)";
+  $("#output ellipse").each(function() {
+    var fr = Math.floor(Math.random() * 255),
+      fg = Math.floor(Math.random() * 255),
+      fb = Math.floor(Math.random() * 255);
+
+    $(this).attr(
+      "fill",
+      "rgba(" + fr + ", " + fg + ", " + fb + ", 0.3)"
+    ).css(
+      "stroke",
+      '#' + 
+        zp(Math.floor((fr/2)).toString(16)) +
+        zp(Math.floor((fg/2)).toString(16)) +
+        zp(Math.floor((fb/2)).toString(16))
+    );
   });
 });
 
