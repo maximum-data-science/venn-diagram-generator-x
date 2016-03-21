@@ -30,7 +30,7 @@ function drawCircle(current, total) {
   var theta = current / total * Math.PI * 2;
 
   // offsets.
-  var cx = 50 - Math.round(Math.cos(theta) * 50)/ 3;
+  var cx = 50 + Math.round(Math.cos(theta) * 50)/ 3;
   var cy = 50 - Math.round(Math.sin(theta) * 50)/ 3;
 
   // Expressed as percentage of total SVG width.
@@ -64,6 +64,7 @@ function drawCircle(current, total) {
   return {
     cx: cx,
     cy: cy,
+    radius: radius,
     theta: theta
   };
 }
@@ -125,8 +126,9 @@ $("#output").on("click", "svg text", function(ev) {
 });
 
 function permuteCenters(fullcount, primitive_centers) {
+  fullcount = +fullcount;
 
-  var initial_fill = new Array(+fullcount).fill(0).map(function(_, i) {
+  var initial_fill = new Array(fullcount).fill(0).map(function(_, i) {
     return (i + 1);
   });
   var keyed_object = initial_fill.reduce(function(obj, i) {
@@ -144,14 +146,14 @@ function permuteCenters(fullcount, primitive_centers) {
 
       var placement_r = key.split("").reduce(function(accumulator, idx) {
         var item = primitive_centers[idx];
-        var offset_x = 50 - item.cx;
-        var offset_y = 50 - item.cy;
+        var offset_x = Math.abs(50 - item.cx) + item.radius; // measure to edge, not center
+        var offset_y = Math.abs(50 - item.cy) + item.radius;
         return accumulator + Math.sqrt(offset_x * offset_x + offset_y * offset_y);
       }, 0) / key.length;
 
       obj[key] = {
-        cx : 50 - placement_r * Math.cos(theta) / key.length * (+fullcount + 4)/4,
-        cy : 50 - placement_r * Math.sin(theta) / key.length * (+fullcount + 4)/4,
+        cx : 50 + placement_r * Math.cos(theta) * Math.pow(0.6, key.length)*(fullcount + 4)/7,
+        cy : 50 - placement_r * Math.sin(theta) * Math.pow(0.6, key.length)*(fullcount + 4)/7,
         theta : theta
       };
     }
