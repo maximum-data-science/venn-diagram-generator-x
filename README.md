@@ -1,8 +1,20 @@
 # Venn Diagram Generator X
 
+The [Venn Diagram Generator X](https://github.com/maximum-data-science/venn-diagram-generator-x) is a script to generate simple Venn Diagrams.
+This project is a fork of the [Venn Diagram Generator](https://github.com/airhadoken/venn-diagram-generator) created by Bradley Momberger in 2016.
 
-It is an extension of the Venn Diagram generator created by Bradley Momberger 2016. The original project can be found at [https://github.com/airhadoken/venn-diagram-generator](https://github.com/airhadoken/venn-diagram-generator)
+The functions are:
+- Draw 2-4 circles automatically at the right place.
+- Edit the labels by clicking. (added removal of empty set marks)
+- Color selection for the circles. (added)
+- Opacity selection. (added)
+- Export to png.
+- Export to svg. (added)
 
-# License
+A demo is available under [https://maximum-data-science.github.io/venn-diagram-generator-x](https://maximum-data-science.github.io/venn-diagram-generator-x/)
 
-See the [LICENSE](https://github.com/jekyll/jekyll/blob/master/LICENSE) file.
+Used technologies are:
+- HTML5/SVG
+- JavaScript/ jQuery
+
+This project is licensed under the MIT license.
