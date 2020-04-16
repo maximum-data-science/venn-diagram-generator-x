@@ -133,7 +133,40 @@ function onOpacityChange() {
         .next("#range-value")
         .html(value);
 }
-function exportDiagram() {
+
+function removeEmptyCaptions(svg) {
+    svg.find("text tspan").text(function() {
+        var val = $(this).text();
+        return val == emptyCaption ? "" : val;
+    });
+}
+function addEmptyCaptions(svg) {
+    svg.find("text tspan").text(function() {
+        var val = $(this).text();
+        return val == "" ? emptyCaption : val;
+    });
+}
+
+function exportSVG() {
+    var svg = $("#output svg");
+
+    removeEmptyCaptions(svg);
+
+    var svgData = svg[0].outerHTML;
+    var svgBlob = new Blob([svgData], {
+        type: "image/svg+xml;charset=utf-8"
+    });
+    var svgUrl = URL.createObjectURL(svgBlob);
+    var link = document.createElement("a");
+    link.href = svgUrl;
+    link.download = "venn_diagram.svg";
+    document.body.appendChild(link);
+    link.click();
+
+    addEmptyCaptions(svg);
+}
+
+function exportPNG() {
     var svg = $("#output svg");
     var $canvas = $("<canvas>")
         .attr("height", svg.attr("height"))
@@ -143,10 +176,7 @@ function exportDiagram() {
 
     var context = $canvas[0].getContext("2d");
 
-    svg.find("text tspan").text(function() {
-        var val = $(this).text();
-        return val == emptyCaption ? "" : val;
-    });
+    removeEmptyCaptions(svg);
 
     //  var imgsrc = 'data:image/svg+xml;base64,'+ btoa(svg.html());
     var imgsrc = "data:image/svg+xml;base64," + btoa(svg[0].outerHTML);
@@ -172,10 +202,7 @@ function exportDiagram() {
     });
     image.src = imgsrc;
 
-    svg.find("text tspan").text(function() {
-        var val = $(this).text();
-        return val == "" ? emptyCaption : val;
-    });
+    addEmptyCaptions(svg);
 }
 
 $("#output").on("click", "svg text", function(ev) {
@@ -330,4 +357,5 @@ $("#size_selector").trigger("change");
 $('[id^="color_text"]').on("change", onColorTextChange);
 $("#opacity_range").on("input", onOpacityChange);
 
-$("#export_button").on("click", exportDiagram);
+$("#export_png_button").on("click", exportPNG);
+$("#export_svg_button").on("click", exportSVG);
